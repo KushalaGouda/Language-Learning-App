@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>LinguaLearn - Dashboard</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         NAVIGATION
+    =========================================== -->
+
+    <nav>
+
+        <div class="logo">
+            🌎 LinguaLearn
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Dashboard
+            </a>
+
+            <a href="lessons.html">
+                Lessons
+            </a>
+
+            <a href="flashcards.html">
+                Flashcards
+            </a>
+
+            <a href="quiz.html">
+                Quiz
+            </a>
+
+            <a href="progress.html">
+                Progress
+            </a>
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- ==========================================
+         DASHBOARD
+    =========================================== -->
+
+    <main>
+
+
+        <!-- WELCOME -->
+
+        <section class="dashboard-header">
+
+            <h1>
+                Welcome to LinguaLearn 👋
+            </h1>
+
+            <p>
+                Learn something new every day!
+            </p>
+
+        </section>
+
+
+
+        <!-- ======================================
+             LANGUAGE SELECTION
+        ======================================= -->
+
+        <section class="language-section">
+
+            <h2>
+                🌎 Choose Your Language
+            </h2>
+
+
+            <div class="language-box">
+
+                <label for="language">
+
+                    I want to learn:
+
+                </label>
+
+
+                <select id="language">
+
+                    <option value="kannada">
+                        Kannada 🇮🇳
+                    </option>
+
+                    <option value="english">
+                        English 🇬🇧
+                    </option>
+
+                    <option value="hindi">
+                        Hindi 🇮🇳
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- Selected language message -->
+
+            <p id="languageMessage">
+
+                🌐 Selected Language: Kannada
+
+            </p>
+
+        </section>
+
+
+
+        <!-- ======================================
+             LEARNING CARDS
+        ======================================= -->
+
+        <section class="learning-section">
+
+            <h2>
+                📚 Start Learning
+            </h2>
+
+
+            <div class="learning-cards">
+
+
+                <!-- LESSONS -->
+
+                <div class="learning-card">
+
+                    <div class="card-icon">
+                        📚
+                    </div>
+
+
+                    <h3>
+                        Daily Lesson
+                    </h3>
+
+
+                    <p>
+                        Learn new words and sentences.
+                    </p>
+
+
+                    <a
+                        href="lessons.html"
+                        class="card-button">
+
+                        Start Lesson
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- FLASHCARDS -->
+
+                <div class="learning-card">
+
+                    <div class="card-icon">
+                        🃏
+                    </div>
+
+
+                    <h3>
+                        Flashcards
+                    </h3>
+
+
+                    <p>
+                        Practice vocabulary with flashcards.
+                    </p>
+
+
+                    <a
+                        href="flashcards.html"
+                        class="card-button">
+
+                        Practice
+
+                    </a>
+
+                </div>
+
+
+
+                <!-- QUIZ -->
+
+                <div class="learning-card">
+
+                    <div class="card-icon">
+                        📝
+                    </div>
+
+
+                    <h3>
+                        Practice Quiz
+                    </h3>
+
+
+                    <p>
+                        Test what you have learned.
+                    </p>
+
+
+                    <a
+                        href="quiz.html"
+                        class="card-button">
+
+                        Take Quiz
+
+                    </a>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             STATISTICS
+        ======================================= -->
+
+        <section class="stats-section">
+
+            <h2>
+                📊 Your Learning Stats
+            </h2>
+
+
+            <div class="stats-container">
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📖
+                    </div>
+
+                    <h3 id="dashboardWordsLearned">
+                        0
+                    </h3>
+
+                    <p>
+                        Words Learned
+                    </p>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🃏
+                    </div>
+
+                    <h3 id="dashboardFlashcards">
+                        0
+                    </h3>
+
+                    <p>
+                        Flashcards Practiced
+                    </p>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        📝
+                    </div>
+
+                    <h3 id="dashboardQuizzes">
+                        0
+                    </h3>
+
+                    <p>
+                        Quizzes Completed
+                    </p>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        ⭐
+                    </div>
+
+                    <h3 id="dashboardScore">
+                        0%
+                    </h3>
+
+                    <p>
+                        Average Score
+                    </p>
+
+                </div>
+
+
+
+                <div class="stat-card">
+
+                    <div class="stat-icon">
+                        🔥
+                    </div>
+
+                    <h3 id="dashboardStreak">
+                        0
+                    </h3>
+
+                    <p>
+                        Day Streak
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ======================================
+             PROGRESS
+        ======================================= -->
+
+        <section class="progress-section">
+
+            <h2>
+                🎯 Learning Progress
+            </h2>
+
+
+            <div class="progress-box">
+
+                <div class="progress-info">
+
+                    <span>
+                        Overall Progress
+                    </span>
+
+                    <span id="dashboardProgressPercentage">
+                        0%
+                    </span>
+
+                </div>
+
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="dashboardProgressFill">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- ==========================================
+         FIREBASE + DASHBOARD DATA
+    =========================================== -->
+
+    <script type="module">
+
+        import {
+            collection,
+            getDocs,
+            query,
+            where
+        }
+        from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        }
+        from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+        import {
+            app,
+            db
+        }
+        from "./js/app.js";
+
+
+        const auth = getAuth(app);
+
+
+
+        // =====================================
+        // LANGUAGE SELECTION
+        // =====================================
+
+        const languageSelect =
+            document.getElementById("language");
+
+        const languageMessage =
+            document.getElementById("languageMessage");
+
+
+        // Load saved language
+
+        const savedLanguage =
+            localStorage.getItem(
+                "selectedLanguage"
+            );
+
+
+        if (savedLanguage) {
+
+            languageSelect.value =
+                savedLanguage;
+
+        }
+
+
+        // Display selected language
+
+        function updateLanguageMessage() {
+
+            const selectedValue =
+                languageSelect.value;
+
+
+            let languageName;
+
+
+            if (selectedValue === "kannada") {
+
+                languageName = "Kannada";
+
+            }
+
+            else if (selectedValue === "english") {
+
+                languageName = "English";
+
+            }
+
+            else if (selectedValue === "hindi") {
+
+                languageName = "Hindi";
+
+            }
+
+
+            languageMessage.innerText =
+                "🌐 Selected Language: " +
+                languageName;
+
+        }
+
+
+        // Save language when changed
+
+        languageSelect.addEventListener(
+            "change",
+            function() {
+
+                const selectedLanguage =
+                    languageSelect.value;
+
+
+                localStorage.setItem(
+                    "selectedLanguage",
+                    selectedLanguage
+                );
+
+
+                updateLanguageMessage();
+
+
+                console.log(
+                    "Selected language:",
+                    selectedLanguage
+                );
+
+            }
+        );
+
+
+        // Show saved language
+
+        updateLanguageMessage();
+
+
+
+        // =====================================
+        // CHECK LOGIN
+        // =====================================
+
+        onAuthStateChanged(
+            auth,
+            async function(user) {
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "Logged in as:",
+                    user.email
+                );
+
+
+                console.log(
+                    "Current user UID:",
+                    user.uid
+                );
+
+
+                await loadDashboardData(
+                    user.uid
+                );
+
+            }
+        );
+
+
+
+        // =====================================
+        // LOAD DASHBOARD DATA
+        // =====================================
+
+        async function loadDashboardData(
+            userId
+        ) {
+
+            try {
+
+                console.log(
+                    "Loading dashboard data..."
+                );
+
+
+                // WORDS LEARNED
+
+                const progressQuery =
+                    query(
+                        collection(
+                            db,
+                            "progress"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            userId
+                        )
+                    );
+
+
+                const progressSnapshot =
+                    await getDocs(
+                        progressQuery
+                    );
+
+
+                let wordsLearned = 0;
+
+
+                progressSnapshot.forEach(
+                    function(doc) {
+
+                        const data =
+                            doc.data();
+
+
+                        const savedWords =
+                            Number(
+                                data.wordsLearned || 0
+                            );
+
+
+                        if (
+                            savedWords >
+                            wordsLearned
+                        ) {
+
+                            wordsLearned =
+                                savedWords;
+
+                        }
+
+                    }
+                );
+
+
+
+                // FLASHCARDS
+
+                const flashcardQuery =
+                    query(
+                        collection(
+                            db,
+                            "flashcardProgress"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            userId
+                        )
+                    );
+
+
+                const flashcardSnapshot =
+                    await getDocs(
+                        flashcardQuery
+                    );
+
+
+                let flashcardsPracticed = 0;
+
+
+                flashcardSnapshot.forEach(
+                    function(doc) {
+
+                        const data =
+                            doc.data();
+
+
+                        const practiced =
+                            Number(
+                                data.cardsPracticed || 0
+                            );
+
+
+                        if (
+                            practiced >
+                            flashcardsPracticed
+                        ) {
+
+                            flashcardsPracticed =
+                                practiced;
+
+                        }
+
+                    }
+                );
+
+
+
+                // QUIZZES
+
+                const quizQuery =
+                    query(
+                        collection(
+                            db,
+                            "quizResults"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            userId
+                        )
+                    );
+
+
+                const quizSnapshot =
+                    await getDocs(
+                        quizQuery
+                    );
+
+
+                let quizzesCompleted = 0;
+
+                let totalPercentage = 0;
+
+
+                quizSnapshot.forEach(
+                    function(doc) {
+
+                        const data =
+                            doc.data();
+
+
+                        quizzesCompleted++;
+
+
+                        let percentage =
+                            Number(
+                                data.percentage
+                            );
+
+
+                        if (
+                            !Number.isFinite(
+                                percentage
+                            )
+                        ) {
+
+                            percentage =
+                                (
+                                    Number(
+                                        data.score || 0
+                                    ) /
+                                    Number(
+                                        data.totalQuestions || 1
+                                    )
+                                ) * 100;
+
+                        }
+
+
+                        totalPercentage +=
+                            percentage;
+
+                    }
+                );
+
+
+
+                // AVERAGE SCORE
+
+                let averageScore = 0;
+
+
+                if (
+                    quizzesCompleted > 0
+                ) {
+
+                    averageScore =
+                        Math.round(
+                            totalPercentage /
+                            quizzesCompleted
+                        );
+
+                }
+
+
+
+                // STREAK
+
+                const streak =
+                    Number(
+                        localStorage.getItem(
+                            "streak"
+                        ) || 0
+                    );
+
+
+
+                // VOCABULARY PROGRESS
+
+                let vocabularyProgress =
+                    (
+                        wordsLearned / 6
+                    ) * 100;
+
+
+                if (
+                    vocabularyProgress > 100
+                ) {
+
+                    vocabularyProgress = 100;
+
+                }
+
+
+
+                // FLASHCARD PROGRESS
+
+                let flashcardProgress =
+                    (
+                        flashcardsPracticed / 6
+                    ) * 100;
+
+
+                if (
+                    flashcardProgress > 100
+                ) {
+
+                    flashcardProgress = 100;
+
+                }
+
+
+
+                // OVERALL PROGRESS
+
+                let overallProgress =
+                    (
+                        vocabularyProgress +
+                        flashcardProgress +
+                        averageScore
+                    ) / 3;
+
+
+                if (
+                    overallProgress > 100
+                ) {
+
+                    overallProgress = 100;
+
+                }
+
+
+
+                // DISPLAY DATA
+
+                document.getElementById(
+                    "dashboardWordsLearned"
+                ).innerText =
+                    wordsLearned;
+
+
+                document.getElementById(
+                    "dashboardFlashcards"
+                ).innerText =
+                    flashcardsPracticed;
+
+
+                document.getElementById(
+                    "dashboardQuizzes"
+                ).innerText =
+                    quizzesCompleted;
+
+
+                document.getElementById(
+                    "dashboardScore"
+                ).innerText =
+                    averageScore + "%";
+
+
+                document.getElementById(
+                    "dashboardStreak"
+                ).innerText =
+                    streak;
+
+
+
+                // PROGRESS BAR
+
+                document.getElementById(
+                    "dashboardProgressPercentage"
+                ).innerText =
+                    Math.round(
+                        overallProgress
+                    ) + "%";
+
+
+                document.getElementById(
+                    "dashboardProgressFill"
+                ).style.width =
+                    overallProgress + "%";
+
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "ERROR LOADING DASHBOARD:",
+                    error
+                );
+
+            }
+
+        }
+
+
+
+        // =====================================
+        // LOGOUT
+        // =====================================
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+        if (logoutButton) {
+
+            logoutButton.addEventListener(
+                "click",
+                async function() {
+
+                    try {
+
+                        await signOut(
+                            auth
+                        );
+
+
+                        window.location.href =
+                            "login.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Logout error:",
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>

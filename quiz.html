@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Quiz - LinguaLearn</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- Navigation -->
+
+    <nav>
+
+        <div class="logo">
+            🌎 LinguaLearn
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">Dashboard</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="flashcards.html">Flashcards</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="progress.html">Progress</a>
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- Header -->
+
+        <section class="dashboard-header">
+
+            <h1>📝 Practice Quiz</h1>
+
+            <p>
+                Test what you have learned.
+            </p>
+
+            <p id="selectedLanguageDisplay">
+                🌐 Language: Kannada
+            </p>
+
+        </section>
+
+
+        <!-- Quiz -->
+
+        <section class="quiz-section">
+
+            <div class="quiz-card">
+
+                <div class="quiz-number" id="questionNumber">
+                    Question 1 of 5
+                </div>
+
+                <h2 id="question">
+                    What is the Kannada word for "Hello"?
+                </h2>
+
+
+                <div class="options" id="options">
+
+                </div>
+
+
+                <p id="result"></p>
+
+
+                <button
+                    class="next-question"
+                    id="nextButton"
+                    onclick="nextQuestion()"
+                    disabled>
+
+                    Next Question →
+
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- Final Result -->
+
+        <section
+            class="quiz-result"
+            id="quizResult"
+            style="display: none;">
+
+            <h2>🎉 Quiz Completed!</h2>
+
+            <p id="finalScore"></p>
+
+            <button
+                class="restart-button"
+                onclick="restartQuiz()">
+
+                🔄 Restart Quiz
+
+            </button>
+
+        </section>
+
+    </main>
+
+
+    <!-- Firebase -->
+
+    <script type="module">
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+        import {
+            app
+        } from "./js/app.js";
+
+
+        const auth = getAuth(app);
+
+
+        // ==========================================
+        // LANGUAGE QUIZ DATA
+        // ==========================================
+
+        const quizData = {
+
+            // ======================================
+            // KANNADA
+            // ======================================
+
+            kannada: [
+
+                {
+                    question:
+                        'What is the Kannada word for "Hello"?',
+
+                    options: [
+                        "ನಮಸ್ಕಾರ",
+                        "ಧನ್ಯವಾದ",
+                        "ಸ್ವಾಗತ",
+                        "ಶುಭ ರಾತ್ರಿ"
+                    ],
+
+                    answer:
+                        "ನಮಸ್ಕಾರ"
+                },
+
+
+                {
+                    question:
+                        'What is the Kannada word for "Thank You"?',
+
+                    options: [
+                        "ನಮಸ್ಕಾರ",
+                        "ಧನ್ಯವಾದ",
+                        "ಶುಭೋದಯ",
+                        "ಸ್ವಾಗತ"
+                    ],
+
+                    answer:
+                        "ಧನ್ಯವಾದ"
+                },
+
+
+                {
+                    question:
+                        'What is the Kannada word for "Good Morning"?',
+
+                    options: [
+                        "ಶುಭ ರಾತ್ರಿ",
+                        "ಸ್ವಾಗತ",
+                        "ಶುಭೋದಯ",
+                        "ಧನ್ಯವಾದ"
+                    ],
+
+                    answer:
+                        "ಶುಭೋದಯ"
+                },
+
+
+                {
+                    question:
+                        'What is the Kannada word for "Welcome"?',
+
+                    options: [
+                        "ಸ್ವಾಗತ",
+                        "ನಮಸ್ಕಾರ",
+                        "ಶುಭೋದಯ",
+                        "ಧನ್ಯವಾದ"
+                    ],
+
+                    answer:
+                        "ಸ್ವಾಗತ"
+                },
+
+
+                {
+                    question:
+                        'What is the Kannada word for "Good Night"?',
+
+                    options: [
+                        "ನಮಸ್ಕಾರ",
+                        "ಶುಭ ರಾತ್ರಿ",
+                        "ಸ್ವಾಗತ",
+                        "ಶುಭೋದಯ"
+                    ],
+
+                    answer:
+                        "ಶುಭ ರಾತ್ರಿ"
+                }
+
+            ],
+
+
+            // ======================================
+            // ENGLISH
+            // ======================================
+
+            english: [
+
+                {
+                    question:
+                        'Which English word means "ನಮಸ್ಕಾರ"?',
+
+                    options: [
+                        "Hello",
+                        "Welcome",
+                        "Thank You",
+                        "Good Night"
+                    ],
+
+                    answer:
+                        "Hello"
+                },
+
+
+                {
+                    question:
+                        'Which English word means "ಧನ್ಯವಾದ"?',
+
+                    options: [
+                        "Good Morning",
+                        "Thank You",
+                        "Hello",
+                        "Welcome"
+                    ],
+
+                    answer:
+                        "Thank You"
+                },
+
+
+                {
+                    question:
+                        'Which English phrase means "ಶುಭೋದಯ"?',
+
+                    options: [
+                        "Good Night",
+                        "Welcome",
+                        "Good Morning",
+                        "Hello"
+                    ],
+
+                    answer:
+                        "Good Morning"
+                },
+
+
+                {
+                    question:
+                        'Which English word means "ಸ್ವಾಗತ"?',
+
+                    options: [
+                        "Welcome",
+                        "Hello",
+                        "Thank You",
+                        "Good Morning"
+                    ],
+
+                    answer:
+                        "Welcome"
+                },
+
+
+                {
+                    question:
+                        'Which English phrase means "ಶುಭ ರಾತ್ರಿ"?',
+
+                    options: [
+                        "Hello",
+                        "Good Morning",
+                        "Good Night",
+                        "Welcome"
+                    ],
+
+                    answer:
+                        "Good Night"
+                }
+
+            ],
+
+
+            // ======================================
+            // HINDI
+            // ======================================
+
+            hindi: [
+
+                {
+                    question:
+                        'What is the Hindi word for "Hello"?',
+
+                    options: [
+                        "नमस्ते",
+                        "धन्यवाद",
+                        "स्वागत है",
+                        "शुभ रात्रि"
+                    ],
+
+                    answer:
+                        "नमस्ते"
+                },
+
+
+                {
+                    question:
+                        'What is the Hindi word for "Thank You"?',
+
+                    options: [
+                        "नमस्ते",
+                        "धन्यवाद",
+                        "सुप्रभात",
+                        "स्वागत है"
+                    ],
+
+                    answer:
+                        "धन्यवाद"
+                },
+
+
+                {
+                    question:
+                        'What is the Hindi word for "Good Morning"?',
+
+                    options: [
+                        "शुभ रात्रि",
+                        "स्वागत है",
+                        "सुप्रभात",
+                        "धन्यवाद"
+                    ],
+
+                    answer:
+                        "सुप्रभात"
+                },
+
+
+                {
+                    question:
+                        'What is the Hindi phrase for "Welcome"?',
+
+                    options: [
+                        "स्वागत है",
+                        "नमस्ते",
+                        "सुप्रभात",
+                        "धन्यवाद"
+                    ],
+
+                    answer:
+                        "स्वागत है"
+                },
+
+
+                {
+                    question:
+                        'What is the Hindi phrase for "Good Night"?',
+
+                    options: [
+                        "नमस्ते",
+                        "शुभ रात्रि",
+                        "स्वागत है",
+                        "सुप्रभात"
+                    ],
+
+                    answer:
+                        "शुभ रात्रि"
+                }
+
+            ]
+
+        };
+
+
+        // ==========================================
+        // GET SELECTED LANGUAGE
+        // ==========================================
+
+        const selectedLanguage =
+            localStorage.getItem("selectedLanguage")
+            || "kannada";
+
+
+        const questions =
+            quizData[selectedLanguage];
+
+
+        let languageName = "Kannada";
+
+
+        if (selectedLanguage === "english") {
+
+            languageName = "English";
+
+        }
+
+        else if (selectedLanguage === "hindi") {
+
+            languageName = "Hindi";
+
+        }
+
+
+        document.getElementById(
+            "selectedLanguageDisplay"
+        ).innerText =
+            "🌐 Language: " + languageName;
+
+
+        // ==========================================
+        // VARIABLES
+        // ==========================================
+
+        let currentQuestion = 0;
+
+        let score = 0;
+
+        let answered = false;
+
+
+        // ==========================================
+        // LOAD QUESTION
+        // ==========================================
+
+        function loadQuestion() {
+
+            const question =
+                questions[currentQuestion];
+
+
+            document.getElementById(
+                "questionNumber"
+            ).innerText =
+                `Question ${currentQuestion + 1} of ${questions.length}`;
+
+
+            document.getElementById(
+                "question"
+            ).innerText =
+                question.question;
+
+
+            const optionsContainer =
+                document.getElementById("options");
+
+
+            optionsContainer.innerHTML = "";
+
+
+            question.options.forEach(
+                function(option) {
+
+                    const button =
+                        document.createElement("button");
+
+
+                    button.innerText =
+                        option;
+
+
+                    button.onclick =
+                        function() {
+
+                            selectAnswer(button);
+
+                        };
+
+
+                    optionsContainer.appendChild(
+                        button
+                    );
+
+                }
+            );
+
+
+            document.getElementById(
+                "result"
+            ).innerText = "";
+
+
+            document.getElementById(
+                "nextButton"
+            ).disabled = true;
+
+
+            answered = false;
+
+        }
+
+
+        // ==========================================
+        // SELECT ANSWER
+        // ==========================================
+
+        function selectAnswer(button) {
+
+            if (answered) {
+
+                return;
+
+            }
+
+
+            answered = true;
+
+
+            const selectedAnswer =
+                button.innerText;
+
+
+            const correctAnswer =
+                questions[currentQuestion].answer;
+
+
+            const allButtons =
+                document.querySelectorAll(
+                    ".options button"
+                );
+
+
+            allButtons.forEach(
+                function(btn) {
+
+                    btn.disabled = true;
+
+                }
+            );
+
+
+            if (
+                selectedAnswer ===
+                correctAnswer
+            ) {
+
+                button.classList.add(
+                    "correct"
+                );
+
+
+                document.getElementById(
+                    "result"
+                ).innerText =
+                    "✅ Correct!";
+
+
+                score++;
+
+            }
+
+            else {
+
+                button.classList.add(
+                    "wrong"
+                );
+
+
+                document.getElementById(
+                    "result"
+                ).innerText =
+                    "❌ Wrong!";
+
+
+                allButtons.forEach(
+                    function(btn) {
+
+                        if (
+                            btn.innerText ===
+                            correctAnswer
+                        ) {
+
+                            btn.classList.add(
+                                "correct"
+                            );
+
+                        }
+
+                    }
+                );
+
+            }
+
+
+            document.getElementById(
+                "nextButton"
+            ).disabled = false;
+
+        }
+
+
+        // ==========================================
+        // NEXT QUESTION
+        // ==========================================
+
+        window.nextQuestion =
+            function() {
+
+                currentQuestion++;
+
+
+                if (
+                    currentQuestion <
+                    questions.length
+                ) {
+
+                    loadQuestion();
+
+                }
+
+                else {
+
+                    showResult();
+
+                }
+
+            };
+
+
+        // ==========================================
+        // SHOW FINAL RESULT
+        // ==========================================
+
+        function showResult() {
+
+            document.querySelector(
+                ".quiz-section"
+            ).style.display =
+                "none";
+
+
+            document.getElementById(
+                "quizResult"
+            ).style.display =
+                "block";
+
+
+            document.getElementById(
+                "finalScore"
+            ).innerText =
+                `You scored ${score} out of ${questions.length}!`;
+
+
+            // ======================================
+            // SAVE QUIZ RESULT TO FIREBASE
+            // ======================================
+
+            if (
+                window.saveQuizResult
+            ) {
+
+                window.saveQuizResult(
+                    score,
+                    questions.length,
+                    selectedLanguage
+                );
+
+            }
+
+
+            // ======================================
+            // LOCAL STORAGE PROGRESS
+            // ======================================
+
+            let quizzesCompleted =
+                Number(
+                    localStorage.getItem(
+                        "quizzesCompleted"
+                    ) || 0
+                );
+
+
+            quizzesCompleted++;
+
+
+            localStorage.setItem(
+                "quizzesCompleted",
+                quizzesCompleted
+            );
+
+
+            // ======================================
+            // SAVE AVERAGE SCORE
+            // ======================================
+
+            let oldAverage =
+                Number(
+                    localStorage.getItem(
+                        "averageScore"
+                    ) || 0
+                );
+
+
+            const currentScore =
+                (
+                    score /
+                    questions.length
+                ) * 100;
+
+
+            let newAverage;
+
+
+            if (
+                quizzesCompleted === 1
+            ) {
+
+                newAverage =
+                    currentScore;
+
+            }
+
+            else {
+
+                newAverage =
+                    (
+                        (
+                            oldAverage *
+                            (quizzesCompleted - 1)
+                        )
+                        +
+                        currentScore
+                    )
+                    /
+                    quizzesCompleted;
+
+            }
+
+
+            newAverage =
+                Math.round(newAverage);
+
+
+            localStorage.setItem(
+                "averageScore",
+                newAverage
+            );
+
+        }
+
+
+        // ==========================================
+        // RESTART QUIZ
+        // ==========================================
+
+        window.restartQuiz =
+            function() {
+
+                currentQuestion = 0;
+
+                score = 0;
+
+                document.getElementById(
+                    "quizResult"
+                ).style.display =
+                    "none";
+
+
+                document.querySelector(
+                    ".quiz-section"
+                ).style.display =
+                    "block";
+
+
+                loadQuestion();
+
+            };
+
+
+        // ==========================================
+        // LOGOUT
+        // ==========================================
+
+        document.getElementById(
+            "logoutButton"
+        ).addEventListener(
+            "click",
+            async function() {
+
+                try {
+
+                    await signOut(auth);
+
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+                catch (error) {
+
+                    console.error(
+                        "Logout error:",
+                        error
+                    );
+
+                }
+
+            }
+        );
+
+
+        // ==========================================
+        // CHECK LOGIN
+        // ==========================================
+
+        onAuthStateChanged(
+            auth,
+            function(user) {
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+                else {
+
+                    console.log(
+                        "Logged in as:",
+                        user.email
+                    );
+
+                }
+
+            }
+        );
+
+
+        // ==========================================
+        // INITIAL QUESTION
+        // ==========================================
+
+        loadQuestion();
+
+    </script>
+
+</body>
+
+</html>

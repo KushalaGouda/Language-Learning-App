@@ -1,0 +1,1290 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Progress - LinguaLearn</title>
+
+    <link rel="stylesheet"
+          href="css/style.css">
+
+    <style>
+
+        /* ==========================================
+           ACHIEVEMENT BADGES
+        ========================================== */
+
+        .badges-section {
+            margin-top: 40px;
+        }
+
+        .badges-section h2 {
+            margin-bottom: 20px;
+        }
+
+        .badges-grid {
+            display: grid;
+            grid-template-columns:
+                repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        .badge-card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px 20px;
+            text-align: center;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.08);
+
+            border: 2px solid #e5e7eb;
+
+            transition:
+                transform 0.2s ease,
+                box-shadow 0.2s ease,
+                border-color 0.2s ease;
+
+            opacity: 0.45;
+
+            filter: grayscale(100%);
+        }
+
+        .badge-card:hover {
+            transform: translateY(-5px);
+
+            box-shadow:
+                0 8px 18px rgba(0, 0, 0, 0.12);
+        }
+
+        .badge-card.unlocked {
+            opacity: 1;
+            filter: grayscale(0%);
+
+            border-color: #f59e0b;
+
+            box-shadow:
+                0 6px 18px rgba(245, 158, 11, 0.25);
+        }
+
+        .badge-card h3 {
+            margin: 12px 0 8px;
+        }
+
+        .badge-card p {
+            margin: 0;
+            color: #666;
+            font-size: 14px;
+        }
+
+        .badge-card.unlocked::after {
+            content: "✓ Unlocked";
+
+            display: block;
+
+            margin-top: 12px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            color: #16a34a;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ==========================================
+         NAVIGATION
+    =========================================== -->
+
+    <nav>
+
+        <div class="logo">
+            🌎 LinguaLearn
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Dashboard
+            </a>
+
+            <a href="lessons.html">
+                Lessons
+            </a>
+
+            <a href="flashcards.html">
+                Flashcards
+            </a>
+
+            <a href="quiz.html">
+                Quiz
+            </a>
+
+            <a href="progress.html">
+                Progress
+            </a>
+
+            <button
+                id="logoutButton"
+                class="logout-button">
+
+                Logout
+
+            </button>
+
+        </div>
+
+    </nav>
+
+
+    <main>
+
+
+        <!-- ==========================================
+             HEADER
+        =========================================== -->
+
+        <section class="dashboard-header">
+
+            <h1>
+                📊 Your Learning Progress
+            </h1>
+
+            <p>
+                Track your language learning journey.
+            </p>
+
+            <p id="selectedLanguageDisplay">
+                🌐 Language: Kannada
+            </p>
+
+        </section>
+
+
+        <!-- ==========================================
+             STATISTICS
+        =========================================== -->
+
+        <section class="progress-stats">
+
+
+            <div class="progress-stat-card">
+
+                <div class="progress-stat-icon">
+                    📚
+                </div>
+
+                <h2 id="wordsLearned">
+                    0
+                </h2>
+
+                <p>
+                    Words Learned
+                </p>
+
+            </div>
+
+
+            <div class="progress-stat-card">
+
+                <div class="progress-stat-icon">
+                    🃏
+                </div>
+
+                <h2 id="flashcardsPracticed">
+                    0
+                </h2>
+
+                <p>
+                    Flashcards Practiced
+                </p>
+
+            </div>
+
+
+            <div class="progress-stat-card">
+
+                <div class="progress-stat-icon">
+                    📝
+                </div>
+
+                <h2 id="quizzesCompleted">
+                    0
+                </h2>
+
+                <p>
+                    Quizzes Completed
+                </p>
+
+            </div>
+
+
+            <div class="progress-stat-card">
+
+                <div class="progress-stat-icon">
+                    ⭐
+                </div>
+
+                <h2 id="averageScore">
+                    0%
+                </h2>
+
+                <p>
+                    Average Score
+                </p>
+
+            </div>
+
+
+            <div class="progress-stat-card">
+
+                <div class="progress-stat-icon">
+                    🔥
+                </div>
+
+                <h2 id="streak">
+                    0
+                </h2>
+
+                <p>
+                    Day Streak
+                </p>
+
+            </div>
+
+
+        </section>
+
+
+        <!-- ==========================================
+             OVERALL PROGRESS
+        =========================================== -->
+
+        <section class="overall-progress">
+
+            <h2>
+                🎯 Overall Progress
+            </h2>
+
+            <div class="progress-box">
+
+                <div class="progress-info">
+
+                    <span>
+                        Learning Progress
+                    </span>
+
+                    <span id="progressPercentage">
+                        0%
+                    </span>
+
+                </div>
+
+                <div class="progress-bar">
+
+                    <div
+                        class="progress-fill"
+                        id="progressFill">
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             LEARNING SUMMARY
+        =========================================== -->
+
+        <section class="learning-summary">
+
+            <h2>
+                📖 Learning Summary
+            </h2>
+
+            <div class="summary-card">
+
+                <p>
+                    Keep learning every day to improve
+                    your vocabulary and language skills!
+                </p>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Vocabulary Progress
+                    </span>
+
+                    <strong id="vocabularyProgress">
+                        0 / 6
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Flashcard Progress
+                    </span>
+
+                    <strong id="flashcardProgress">
+                        0 / 6
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Quiz Performance
+                    </span>
+
+                    <strong id="quizPerformance">
+                        0%
+                    </strong>
+
+                </div>
+
+
+                <div class="summary-item">
+
+                    <span>
+                        Learning Status
+                    </span>
+
+                    <strong id="learningStatus">
+                        Just Started
+                    </strong>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             CONTINUE LEARNING
+        =========================================== -->
+
+        <section class="continue-section">
+
+            <h2>
+                🚀 Continue Learning
+            </h2>
+
+            <div class="continue-buttons">
+
+
+                <a
+                    href="lessons.html"
+                    class="progress-button">
+
+                    📚 Continue Lesson
+
+                </a>
+
+
+                <a
+                    href="flashcards.html"
+                    class="progress-button">
+
+                    🃏 Practice Flashcards
+
+                </a>
+
+
+                <a
+                    href="quiz.html"
+                    class="progress-button">
+
+                    📝 Take Quiz
+
+                </a>
+
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             ACHIEVEMENT BADGES
+        =========================================== -->
+
+        <section class="badges-section">
+
+            <h2>
+                🏆 Achievement Badges
+            </h2>
+
+
+            <div class="badges-grid">
+
+
+                <div
+                    class="badge-card"
+                    id="badgeBeginner">
+
+                    🌱
+
+                    <h3>
+                        Beginner
+                    </h3>
+
+                    <p>
+                        Learn your first word.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="badge-card"
+                    id="badgeVocabulary">
+
+                    📚
+
+                    <h3>
+                        Vocabulary Master
+                    </h3>
+
+                    <p>
+                        Learn all 6 words.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="badge-card"
+                    id="badgeFlashcard">
+
+                    🃏
+
+                    <h3>
+                        Flashcard Pro
+                    </h3>
+
+                    <p>
+                        Practice all 6 flashcards.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="badge-card"
+                    id="badgeQuiz">
+
+                    📝
+
+                    <h3>
+                        Quiz Champion
+                    </h3>
+
+                    <p>
+                        Score 100%.
+                    </p>
+
+                </div>
+
+
+                <div
+                    class="badge-card"
+                    id="badgeStreak">
+
+                    🔥
+
+                    <h3>
+                        Streak Starter
+                    </h3>
+
+                    <p>
+                        Reach a 3-day streak.
+                    </p>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+    <!-- ==========================================
+         FIREBASE + PROGRESS
+    =========================================== -->
+
+    <script type="module">
+
+        import {
+            collection,
+            getDocs,
+            query,
+            where
+        } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+        import {
+            getAuth,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+        import {
+            app,
+            db
+        } from "./js/app.js";
+
+
+        const auth = getAuth(app);
+
+
+        // ==========================================
+        // SELECTED LANGUAGE
+        // ==========================================
+
+        const selectedLanguage =
+            localStorage.getItem("selectedLanguage")
+            || "kannada";
+
+
+        const languageNames = {
+
+            kannada: "Kannada",
+
+            english: "English",
+
+            hindi: "Hindi"
+
+        };
+
+
+        const languageName =
+            languageNames[selectedLanguage]
+            || "Kannada";
+
+
+        document.getElementById(
+            "selectedLanguageDisplay"
+        ).innerText =
+            "🌐 Language: " + languageName;
+
+
+        // ==========================================
+        // CHECK LOGIN
+        // ==========================================
+
+        onAuthStateChanged(
+            auth,
+            async function(user) {
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                    return;
+
+                }
+
+
+                console.log(
+                    "Logged in as:",
+                    user.email
+                );
+
+
+                console.log(
+                    "Current user UID:",
+                    user.uid
+                );
+
+
+                await loadProgress(
+                    user.uid
+                );
+
+            }
+        );
+
+
+        // ==========================================
+        // LOAD PROGRESS
+        // ==========================================
+
+        async function loadProgress(userId) {
+
+            try {
+
+                // ======================================
+                // WORDS LEARNED
+                // ======================================
+
+                const progressQuery =
+                    query(
+                        collection(
+                            db,
+                            "progress"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            userId
+                        )
+                    );
+
+
+                const progressSnapshot =
+                    await getDocs(
+                        progressQuery
+                    );
+
+
+                let wordsLearned = 0;
+
+
+                progressSnapshot.forEach(
+                    function(progressDoc) {
+
+                        const data =
+                            progressDoc.data();
+
+
+                        const savedWords =
+                            Number(
+                                data.wordsLearned || 0
+                            );
+
+
+                        /*
+                         * IMPORTANT:
+                         *
+                         * If the Firebase document has
+                         * a language field, use it only
+                         * for the selected language.
+                         *
+                         * If the old document does NOT
+                         * have a language field, still
+                         * accept it so existing progress
+                         * does not disappear.
+                         */
+
+                        if (
+                            data.language &&
+                            data.language !==
+                            selectedLanguage
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        if (
+                            savedWords >
+                            wordsLearned
+                        ) {
+
+                            wordsLearned =
+                                savedWords;
+
+                        }
+
+                    }
+                );
+
+
+                // ======================================
+                // FLASHCARD PROGRESS
+                // ======================================
+
+                const flashcardQuery =
+                    query(
+                        collection(
+                            db,
+                            "flashcardProgress"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            userId
+                        )
+                    );
+
+
+                const flashcardSnapshot =
+                    await getDocs(
+                        flashcardQuery
+                    );
+
+
+                let flashcardsPracticed = 0;
+
+
+                flashcardSnapshot.forEach(
+                    function(flashcardDoc) {
+
+                        const data =
+                            flashcardDoc.data();
+
+
+                        /*
+                         * Same compatibility rule
+                         * for older flashcard data.
+                         */
+
+                        if (
+                            data.language &&
+                            data.language !==
+                            selectedLanguage
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        const practiced =
+                            Number(
+                                data.cardsPracticed || 0
+                            );
+
+
+                        if (
+                            practiced >
+                            flashcardsPracticed
+                        ) {
+
+                            flashcardsPracticed =
+                                practiced;
+
+                        }
+
+                    }
+                );
+
+
+                // ======================================
+                // QUIZ RESULTS
+                // ======================================
+
+                const quizQuery =
+                    query(
+                        collection(
+                            db,
+                            "quizResults"
+                        ),
+                        where(
+                            "userId",
+                            "==",
+                            userId
+                        )
+                    );
+
+
+                const quizSnapshot =
+                    await getDocs(
+                        quizQuery
+                    );
+
+
+                let quizzesCompleted = 0;
+
+                let totalPercentage = 0;
+
+
+                quizSnapshot.forEach(
+                    function(quizDoc) {
+
+                        const data =
+                            quizDoc.data();
+
+
+                        /*
+                         * Only filter by language
+                         * when the record actually
+                         * contains a language field.
+                         */
+
+                        if (
+                            data.language &&
+                            data.language !==
+                            selectedLanguage
+                        ) {
+
+                            return;
+
+                        }
+
+
+                        quizzesCompleted++;
+
+
+                        let percentage =
+                            Number(
+                                data.percentage
+                            );
+
+
+                        if (
+                            !Number.isFinite(
+                                percentage
+                            )
+                        ) {
+
+                            percentage =
+                                (
+                                    Number(
+                                        data.score || 0
+                                    )
+                                    /
+                                    Number(
+                                        data.totalQuestions || 1
+                                    )
+                                )
+                                * 100;
+
+                        }
+
+
+                        totalPercentage +=
+                            percentage;
+
+                    }
+                );
+
+
+                // ======================================
+                // AVERAGE SCORE
+                // ======================================
+
+                let averageScore = 0;
+
+
+                if (
+                    quizzesCompleted > 0
+                ) {
+
+                    averageScore =
+                        Math.round(
+                            totalPercentage /
+                            quizzesCompleted
+                        );
+
+                }
+
+
+                // ======================================
+                // STREAK
+                // ======================================
+
+                const streak =
+                    Number(
+                        localStorage.getItem(
+                            "streak"
+                        ) || 0
+                    );
+
+
+                // ======================================
+                // DISPLAY STATISTICS
+                // ======================================
+
+                document.getElementById(
+                    "wordsLearned"
+                ).innerText =
+                    wordsLearned;
+
+
+                document.getElementById(
+                    "flashcardsPracticed"
+                ).innerText =
+                    flashcardsPracticed;
+
+
+                document.getElementById(
+                    "quizzesCompleted"
+                ).innerText =
+                    quizzesCompleted;
+
+
+                document.getElementById(
+                    "averageScore"
+                ).innerText =
+                    averageScore + "%";
+
+
+                document.getElementById(
+                    "streak"
+                ).innerText =
+                    streak;
+
+
+                // ======================================
+                // VOCABULARY PROGRESS
+                // ======================================
+
+                let vocabularyProgress =
+                    (
+                        wordsLearned / 6
+                    ) * 100;
+
+
+                vocabularyProgress =
+                    Math.min(
+                        vocabularyProgress,
+                        100
+                    );
+
+
+                // ======================================
+                // FLASHCARD PROGRESS
+                // ======================================
+
+                let flashcardProgressPercentage =
+                    (
+                        flashcardsPracticed / 6
+                    ) * 100;
+
+
+                flashcardProgressPercentage =
+                    Math.min(
+                        flashcardProgressPercentage,
+                        100
+                    );
+
+
+                // ======================================
+                // OVERALL PROGRESS
+                // ======================================
+
+                let overallProgress =
+                    (
+                        vocabularyProgress +
+                        flashcardProgressPercentage +
+                        averageScore
+                    ) / 3;
+
+
+                overallProgress =
+                    Math.min(
+                        overallProgress,
+                        100
+                    );
+
+
+                document.getElementById(
+                    "progressPercentage"
+                ).innerText =
+                    Math.round(
+                        overallProgress
+                    ) + "%";
+
+
+                document.getElementById(
+                    "progressFill"
+                ).style.width =
+                    overallProgress + "%";
+
+
+                // ======================================
+                // SUMMARY
+                // ======================================
+
+                document.getElementById(
+                    "vocabularyProgress"
+                ).innerText =
+                    wordsLearned + " / 6";
+
+
+                document.getElementById(
+                    "flashcardProgress"
+                ).innerText =
+                    flashcardsPracticed + " / 6";
+
+
+                document.getElementById(
+                    "quizPerformance"
+                ).innerText =
+                    averageScore + "%";
+
+
+                // ======================================
+                // LEARNING STATUS
+                // ======================================
+
+                let status =
+                    "Just Started";
+
+
+                if (
+                    wordsLearned >= 6 &&
+                    flashcardsPracticed >= 6 &&
+                    averageScore >= 80
+                ) {
+
+                    status =
+                        "Excellent Progress! 🎉";
+
+                }
+
+                else if (
+                    wordsLearned >= 3 ||
+                    flashcardsPracticed >= 3 ||
+                    averageScore >= 50
+                ) {
+
+                    status =
+                        "Good Progress! 👍";
+
+                }
+
+                else if (
+                    wordsLearned > 0 ||
+                    flashcardsPracticed > 0
+                ) {
+
+                    status =
+                        "Keep Going! 💪";
+
+                }
+
+
+                document.getElementById(
+                    "learningStatus"
+                ).innerText =
+                    status;
+
+
+                // ======================================
+                // BADGES
+                // ======================================
+
+                updateBadges(
+                    wordsLearned,
+                    flashcardsPracticed,
+                    averageScore,
+                    streak
+                );
+
+
+                // ======================================
+                // CONSOLE
+                // ======================================
+
+                console.log(
+                    "================================"
+                );
+
+                console.log(
+                    "PROGRESS LOADED SUCCESSFULLY"
+                );
+
+                console.log(
+                    "Language:",
+                    languageName
+                );
+
+                console.log(
+                    "Words Learned:",
+                    wordsLearned
+                );
+
+                console.log(
+                    "Flashcards Practiced:",
+                    flashcardsPracticed
+                );
+
+                console.log(
+                    "Quizzes Completed:",
+                    quizzesCompleted
+                );
+
+                console.log(
+                    "Average Score:",
+                    averageScore + "%"
+                );
+
+                console.log(
+                    "Overall Progress:",
+                    Math.round(
+                        overallProgress
+                    ) + "%"
+                );
+
+                console.log(
+                    "================================"
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "ERROR LOADING PROGRESS:",
+                    error
+                );
+
+            }
+
+        }
+
+
+        // ==========================================
+        // ACHIEVEMENT BADGES
+        // ==========================================
+
+        function updateBadges(
+            wordsLearned,
+            flashcardsPracticed,
+            averageScore,
+            streak
+        ) {
+
+            // Beginner
+
+            if (
+                wordsLearned >= 1
+            ) {
+
+                document.getElementById(
+                    "badgeBeginner"
+                ).classList.add(
+                    "unlocked"
+                );
+
+            }
+
+
+            // Vocabulary Master
+
+            if (
+                wordsLearned >= 6
+            ) {
+
+                document.getElementById(
+                    "badgeVocabulary"
+                ).classList.add(
+                    "unlocked"
+                );
+
+            }
+
+
+            // Flashcard Pro
+
+            if (
+                flashcardsPracticed >= 6
+            ) {
+
+                document.getElementById(
+                    "badgeFlashcard"
+                ).classList.add(
+                    "unlocked"
+                );
+
+            }
+
+
+            // Quiz Champion
+
+            if (
+                averageScore >= 100
+            ) {
+
+                document.getElementById(
+                    "badgeQuiz"
+                ).classList.add(
+                    "unlocked"
+                );
+
+            }
+
+
+            // Streak Starter
+
+            if (
+                streak >= 3
+            ) {
+
+                document.getElementById(
+                    "badgeStreak"
+                ).classList.add(
+                    "unlocked"
+                );
+
+            }
+
+        }
+
+
+        // ==========================================
+        // LOGOUT
+        // ==========================================
+
+        const logoutButton =
+            document.getElementById(
+                "logoutButton"
+            );
+
+
+        if (logoutButton) {
+
+            logoutButton.addEventListener(
+                "click",
+                async function() {
+
+                    try {
+
+                        await signOut(auth);
+
+                        window.location.href =
+                            "login.html";
+
+                    }
+
+                    catch (error) {
+
+                        console.error(
+                            "Logout error:",
+                            error
+                        );
+
+                    }
+
+                }
+            );
+
+        }
+
+    </script>
+
+
+</body>
+
+</html>
+```

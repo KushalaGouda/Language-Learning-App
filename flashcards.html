@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+```
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Flashcards - LinguaLearn</title>
+
+<link rel="stylesheet"
+      href="css/style.css">
+```
+
+</head>
+
+<body>
+
+```
+<!-- ==========================================
+     NAVIGATION
+=========================================== -->
+
+<nav>
+
+    <div class="logo">
+        🌎 LinguaLearn
+    </div>
+
+    <div class="nav-links">
+
+        <a href="index.html">Dashboard</a>
+        <a href="lessons.html">Lessons</a>
+        <a href="flashcards.html">Flashcards</a>
+        <a href="quiz.html">Quiz</a>
+        <a href="progress.html">Progress</a>
+
+        <button
+            id="logoutButton"
+            class="logout-button">
+
+            Logout
+
+        </button>
+
+    </div>
+
+</nav>
+
+
+<main>
+
+    <!-- ==========================================
+         HEADER
+    =========================================== -->
+
+    <section class="dashboard-header">
+
+        <h1>🃏 Flashcards</h1>
+
+        <p>
+            Practice your vocabulary.
+        </p>
+
+        <p id="selectedLanguageDisplay">
+            🌐 Language: Kannada
+        </p>
+
+    </section>
+
+
+    <!-- ==========================================
+         FLASHCARD
+    =========================================== -->
+
+    <section class="flashcard-section">
+
+        <div
+            class="flashcard"
+            id="flashcard"
+            onclick="showAnswer()">
+
+            <div class="flashcard-content">
+
+                <div id="cardNumber">
+                    Card 1 of 6
+                </div>
+
+                <h2 id="word">
+                    Hello
+                </h2>
+
+                <p id="instruction">
+                    👆 Click the card to reveal the answer
+                </p>
+
+                <div id="answer" class="hidden">
+
+                    <p class="flashcard-translation">
+                        ನಮಸ್ಕಾರ
+                    </p>
+
+                    <p class="flashcard-pronunciation">
+                        🔊 Namaskara
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             CONTROLS
+        =========================================== -->
+
+        <div class="flashcard-controls">
+
+            <button
+                onclick="previousCard()"
+                id="previousButton">
+
+                ← Previous
+
+            </button>
+
+            <button
+                onclick="nextCard()"
+                id="nextButton">
+
+                Next →
+
+            </button>
+
+        </div>
+
+
+        <!-- ==========================================
+             PROGRESS
+        =========================================== -->
+
+        <div class="flashcard-progress">
+
+            <p id="progressText">
+                1 / 6
+            </p>
+
+            <p id="practicedText">
+                Practiced: 0 / 6
+            </p>
+
+        </div>
+
+    </section>
+
+</main>
+
+
+<!-- ==========================================
+     FIREBASE FLASHCARD LOGIC
+=========================================== -->
+
+<script type="module">
+
+    import {
+        doc,
+        getDoc,
+        setDoc
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-firestore.js";
+
+
+    import {
+        getAuth,
+        onAuthStateChanged,
+        signOut
+    } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+    import {
+        app,
+        db
+    } from "./js/app.js";
+
+
+    const auth = getAuth(app);
+
+
+    // ==========================================
+    // LANGUAGE DATA
+    // ==========================================
+
+    const flashcardData = {
+
+        // KANNADA
+
+        kannada: [
+
+            {
+                word: "Hello",
+                translation: "ನಮಸ್ಕಾರ",
+                pronunciation: "Namaskara"
+            },
+
+            {
+                word: "Thank You",
+                translation: "ಧನ್ಯವಾದ",
+                pronunciation: "Dhanyavada"
+            },
+
+            {
+                word: "Good Morning",
+                translation: "ಶುಭೋದಯ",
+                pronunciation: "Shubhodaya"
+            },
+
+            {
+                word: "How are you?",
+                translation: "ನೀವು ಹೇಗಿದ್ದೀರಿ?",
+                pronunciation: "Neevu hegiddiri?"
+            },
+
+            {
+                word: "Good Night",
+                translation: "ಶುಭ ರಾತ್ರಿ",
+                pronunciation: "Shubha ratri"
+            },
+
+            {
+                word: "Welcome",
+                translation: "ಸ್ವಾಗತ",
+                pronunciation: "Swagatha"
+            }
+
+        ],
+
+
+        // ENGLISH
+
+        english: [
+
+            {
+                word: "Hello",
+                translation: "Hello",
+                pronunciation: "Hello"
+            },
+
+            {
+                word: "Thank You",
+                translation: "Thank You",
+                pronunciation: "Thank You"
+            },
+
+            {
+                word: "Good Morning",
+                translation: "Good Morning",
+                pronunciation: "Good Morning"
+            },
+
+            {
+                word: "How are you?",
+                translation: "How are you?",
+                pronunciation: "How are you?"
+            },
+
+            {
+                word: "Good Night",
+                translation: "Good Night",
+                pronunciation: "Good Night"
+            },
+
+            {
+                word: "Welcome",
+                translation: "Welcome",
+                pronunciation: "Welcome"
+            }
+
+        ],
+
+
+        // HINDI
+
+        hindi: [
+
+            {
+                word: "Hello",
+                translation: "नमस्ते",
+                pronunciation: "Namaste"
+            },
+
+            {
+                word: "Thank You",
+                translation: "धन्यवाद",
+                pronunciation: "Dhanyavaad"
+            },
+
+            {
+                word: "Good Morning",
+                translation: "सुप्रभात",
+                pronunciation: "Suprabhaat"
+            },
+
+            {
+                word: "How are you?",
+                translation: "आप कैसे हैं?",
+                pronunciation: "Aap kaise hain?"
+            },
+
+            {
+                word: "Good Night",
+                translation: "शुभ रात्रि",
+                pronunciation: "Shubh raatri"
+            },
+
+            {
+                word: "Welcome",
+                translation: "स्वागत है",
+                pronunciation: "Swaagat hai"
+            }
+
+        ]
+
+    };
+
+
+    // ==========================================
+    // SELECTED LANGUAGE
+    // ==========================================
+
+    const selectedLanguage =
+        localStorage.getItem("selectedLanguage")
+        || "kannada";
+
+
+    const flashcards =
+        flashcardData[selectedLanguage]
+        || flashcardData.kannada;
+
+
+    let languageName = "Kannada";
+
+
+    if (selectedLanguage === "english") {
+
+        languageName = "English";
+
+    }
+
+    else if (selectedLanguage === "hindi") {
+
+        languageName = "Hindi";
+
+    }
+
+
+    document.getElementById(
+        "selectedLanguageDisplay"
+    ).innerText =
+        "🌐 Language: " + languageName;
+
+
+    // ==========================================
+    // VARIABLES
+    // ==========================================
+
+    let currentCard = 0;
+
+    let currentUser = null;
+
+    let practicedCards = new Set();
+
+
+    // ==========================================
+    // UNIQUE FIRESTORE DOCUMENT
+    // ONE USER + ONE LANGUAGE
+    // ==========================================
+
+    function getProgressDocumentId() {
+
+        return currentUser.uid +
+            "_" +
+            selectedLanguage;
+
+    }
+
+
+    // ==========================================
+    // UPDATE PRACTICED DISPLAY
+    // ==========================================
+
+    function updatePracticedDisplay() {
+
+        const practicedText =
+            document.getElementById(
+                "practicedText"
+            );
+
+        if (practicedText) {
+
+            practicedText.innerText =
+                "Practiced: " +
+                practicedCards.size +
+                " / " +
+                flashcards.length;
+
+        }
+
+    }
+
+
+    // ==========================================
+    // CHECK LOGIN
+    // ==========================================
+
+    onAuthStateChanged(
+        auth,
+        async function(user) {
+
+            if (!user) {
+
+                window.location.href =
+                    "login.html";
+
+                return;
+
+            }
+
+
+            currentUser = user;
+
+
+            console.log(
+                "Logged in as:",
+                user.email
+            );
+
+
+            console.log(
+                "User UID:",
+                user.uid
+            );
+
+
+            console.log(
+                "Selected language:",
+                selectedLanguage
+            );
+
+
+            await loadFlashcardProgress();
+
+        }
+    );
+
+
+    // ==========================================
+    // LOAD FLASHCARD PROGRESS
+    // ==========================================
+
+    async function loadFlashcardProgress() {
+
+        try {
+
+            const documentId =
+                getProgressDocumentId();
+
+
+            const progressRef =
+                doc(
+                    db,
+                    "flashcardProgress",
+                    documentId
+                );
+
+
+            const progressSnapshot =
+                await getDoc(
+                    progressRef
+                );
+
+
+            if (
+                progressSnapshot.exists()
+            ) {
+
+                const data =
+                    progressSnapshot.data();
+
+
+                const savedCards =
+                    Array.isArray(
+                        data.practicedCardIds
+                    )
+                        ? data.practicedCardIds
+                        : [];
+
+
+                practicedCards =
+                    new Set(
+                        savedCards
+                    );
+
+
+                console.log(
+                    "Loaded flashcard progress."
+                );
+
+                console.log(
+                    "Language:",
+                    languageName
+                );
+
+                console.log(
+                    "Cards practiced:",
+                    practicedCards.size
+                );
+
+            }
+
+            else {
+
+                practicedCards =
+                    new Set();
+
+
+                console.log(
+                    "No saved flashcard progress for:",
+                    languageName
+                );
+
+            }
+
+
+            updatePracticedDisplay();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Error loading flashcard progress:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // ==========================================
+    // SAVE FLASHCARD PROGRESS
+    // ==========================================
+
+    async function saveFlashcardProgress() {
+
+        if (!currentUser) {
+
+            console.log(
+                "No logged-in user."
+            );
+
+            return;
+
+        }
+
+
+        try {
+
+            const practicedCardIds =
+                Array.from(
+                    practicedCards
+                );
+
+
+            const documentId =
+                getProgressDocumentId();
+
+
+            const progressRef =
+                doc(
+                    db,
+                    "flashcardProgress",
+                    documentId
+                );
+
+
+            await setDoc(
+                progressRef,
+                {
+
+                    userId:
+                        currentUser.uid,
+
+                    language:
+                        selectedLanguage,
+
+                    cardsPracticed:
+                        practicedCards.size,
+
+                    totalCards:
+                        flashcards.length,
+
+                    practicedCardIds:
+                        practicedCardIds,
+
+                    updatedAt:
+                        new Date()
+
+                }
+            );
+
+
+            console.log(
+                "Flashcard progress saved successfully!"
+            );
+
+
+            console.log(
+                "Language:",
+                languageName
+            );
+
+
+            console.log(
+                "Cards practiced:",
+                practicedCards.size
+            );
+
+
+            updatePracticedDisplay();
+
+        }
+
+        catch (error) {
+
+            console.error(
+                "Error saving flashcard progress:",
+                error
+            );
+
+        }
+
+    }
+
+
+    // ==========================================
+    // LOAD CARD
+    // ==========================================
+
+    function loadCard() {
+
+        const card =
+            flashcards[currentCard];
+
+
+        document.getElementById(
+            "word"
+        ).innerText =
+            card.word;
+
+
+        document.getElementById(
+            "answer"
+        ).innerHTML =
+
+            `<p class="flashcard-translation">
+                ${card.translation}
+            </p>
+
+            <p class="flashcard-pronunciation">
+                🔊 ${card.pronunciation}
+            </p>`;
+
+
+        document.getElementById(
+            "cardNumber"
+        ).innerText =
+            `Card ${currentCard + 1} of ${flashcards.length}`;
+
+
+        document.getElementById(
+            "progressText"
+        ).innerText =
+            `${currentCard + 1} / ${flashcards.length}`;
+
+
+        document.getElementById(
+            "answer"
+        ).classList.add(
+            "hidden"
+        );
+
+
+        document.getElementById(
+            "instruction"
+        ).innerText =
+            "👆 Click the card to reveal the answer";
+
+
+        updatePracticedDisplay();
+
+
+        // ======================================
+        // PREVIOUS BUTTON
+        // ======================================
+
+        document.getElementById(
+            "previousButton"
+        ).disabled =
+            currentCard === 0;
+
+
+        // ======================================
+        // NEXT BUTTON
+        // ======================================
+
+        document.getElementById(
+            "nextButton"
+        ).disabled =
+            currentCard ===
+            flashcards.length - 1;
+
+    }
+
+
+    // ==========================================
+    // SHOW ANSWER
+    // ==========================================
+
+    window.showAnswer =
+        async function() {
+
+            const answer =
+                document.getElementById(
+                    "answer"
+                );
+
+
+            const instruction =
+                document.getElementById(
+                    "instruction"
+                );
+
+
+            if (
+                answer.classList.contains(
+                    "hidden"
+                )
+            ) {
+
+                answer.classList.remove(
+                    "hidden"
+                );
+
+
+                instruction.innerText =
+                    "✓ Answer revealed";
+
+
+                // Mark current card as practiced
+
+                practicedCards.add(
+                    currentCard
+                );
+
+
+                console.log(
+                    "Cards practiced:",
+                    practicedCards.size
+                );
+
+
+                updatePracticedDisplay();
+
+
+                await saveFlashcardProgress();
+
+            }
+
+        };
+
+
+    // ==========================================
+    // NEXT CARD
+    // ==========================================
+
+    window.nextCard =
+        function() {
+
+            if (
+                currentCard <
+                flashcards.length - 1
+            ) {
+
+                currentCard++;
+
+                loadCard();
+
+            }
+
+        };
+
+
+    // ==========================================
+    // PREVIOUS CARD
+    // ==========================================
+
+    window.previousCard =
+        function() {
+
+            if (
+                currentCard > 0
+            ) {
+
+                currentCard--;
+
+                loadCard();
+
+            }
+
+        };
+
+
+    // ==========================================
+    // LOGOUT
+    // ==========================================
+
+    document.getElementById(
+        "logoutButton"
+    ).addEventListener(
+        "click",
+        async function() {
+
+            try {
+
+                await signOut(
+                    auth
+                );
+
+
+                window.location.href =
+                    "login.html";
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+        }
+    );
+
+
+    // ==========================================
+    // INITIAL CARD
+    // ==========================================
+
+    loadCard();
+
+</script>
+```
+
+</body>
+
+</html>

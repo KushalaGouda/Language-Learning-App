@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Lessons - LinguaLearn</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <!-- ==========================================
+         NAVIGATION
+    =========================================== -->
+
+    <nav>
+
+        <div class="logo">
+            🌎 LinguaLearn
+        </div>
+
+        <div class="nav-links">
+
+            <a href="index.html">Dashboard</a>
+            <a href="lessons.html">Lessons</a>
+            <a href="flashcards.html">Flashcards</a>
+            <a href="quiz.html">Quiz</a>
+            <a href="progress.html">Progress</a>
+
+        </div>
+
+    </nav>
+
+
+    <main>
+
+        <!-- ==========================================
+             PAGE HEADER
+        =========================================== -->
+
+        <section class="dashboard-header">
+
+            <h1>📚 Daily Lesson</h1>
+
+            <p>
+                Learn new words and sentences today.
+            </p>
+
+            <p id="selectedLanguageDisplay">
+                🌐 Selected Language: Kannada
+            </p>
+
+        </section>
+
+
+        <!-- ==========================================
+             VOCABULARY
+        =========================================== -->
+
+        <section class="lesson-section">
+
+            <h2>🔤 Today's Vocabulary</h2>
+
+            <div class="word-container">
+
+                <!-- WORD 1 -->
+
+                <div class="word-card">
+
+                    <div class="word-number">
+                        1
+                    </div>
+
+                    <h3 id="word1">
+                        Hello
+                    </h3>
+
+                    <p
+                        class="translation"
+                        id="translation1">
+
+                        ನಮಸ್ಕಾರ
+
+                    </p>
+
+                    <p
+                        class="pronunciation"
+                        id="pronunciation1">
+
+                        🔊 Namaskara
+
+                    </p>
+
+                    <button
+                        class="learn-button"
+                        onclick="markLearned(this)">
+
+                        Mark as Learned ✓
+
+                    </button>
+
+                </div>
+
+
+                <!-- WORD 2 -->
+
+                <div class="word-card">
+
+                    <div class="word-number">
+                        2
+                    </div>
+
+                    <h3 id="word2">
+                        Thank You
+                    </h3>
+
+                    <p
+                        class="translation"
+                        id="translation2">
+
+                        ಧನ್ಯವಾದ
+
+                    </p>
+
+                    <p
+                        class="pronunciation"
+                        id="pronunciation2">
+
+                        🔊 Dhanyavada
+
+                    </p>
+
+                    <button
+                        class="learn-button"
+                        onclick="markLearned(this)">
+
+                        Mark as Learned ✓
+
+                    </button>
+
+                </div>
+
+
+                <!-- WORD 3 -->
+
+                <div class="word-card">
+
+                    <div class="word-number">
+                        3
+                    </div>
+
+                    <h3 id="word3">
+                        Good Morning
+                    </h3>
+
+                    <p
+                        class="translation"
+                        id="translation3">
+
+                        ಶುಭೋದಯ
+
+                    </p>
+
+                    <p
+                        class="pronunciation"
+                        id="pronunciation3">
+
+                        🔊 Shubhodaya
+
+                    </p>
+
+                    <button
+                        class="learn-button"
+                        onclick="markLearned(this)">
+
+                        Mark as Learned ✓
+
+                    </button>
+
+                </div>
+
+
+                <!-- WORD 4 -->
+
+                <div class="word-card">
+
+                    <div class="word-number">
+                        4
+                    </div>
+
+                    <h3 id="word4">
+                        How are you?
+                    </h3>
+
+                    <p
+                        class="translation"
+                        id="translation4">
+
+                        ನೀವು ಹೇಗಿದ್ದೀರಿ?
+
+                    </p>
+
+                    <p
+                        class="pronunciation"
+                        id="pronunciation4">
+
+                        🔊 Neevu hegiddiri?
+
+                    </p>
+
+                    <button
+                        class="learn-button"
+                        onclick="markLearned(this)">
+
+                        Mark as Learned ✓
+
+                    </button>
+
+                </div>
+
+
+                <!-- WORD 5 -->
+
+                <div class="word-card">
+
+                    <div class="word-number">
+                        5
+                    </div>
+
+                    <h3 id="word5">
+                        Good Night
+                    </h3>
+
+                    <p
+                        class="translation"
+                        id="translation5">
+
+                        ಶುಭ ರಾತ್ರಿ
+
+                    </p>
+
+                    <p
+                        class="pronunciation"
+                        id="pronunciation5">
+
+                        🔊 Shubha ratri
+
+                    </p>
+
+                    <button
+                        class="learn-button"
+                        onclick="markLearned(this)">
+
+                        Mark as Learned ✓
+
+                    </button>
+
+                </div>
+
+
+                <!-- WORD 6 -->
+
+                <div class="word-card">
+
+                    <div class="word-number">
+                        6
+                    </div>
+
+                    <h3 id="word6">
+                        Welcome
+                    </h3>
+
+                    <p
+                        class="translation"
+                        id="translation6">
+
+                        ಸ್ವಾಗತ
+
+                    </p>
+
+                    <p
+                        class="pronunciation"
+                        id="pronunciation6">
+
+                        🔊 Swagatha
+
+                    </p>
+
+                    <button
+                        class="learn-button"
+                        onclick="markLearned(this)">
+
+                        Mark as Learned ✓
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ==========================================
+             SENTENCE PRACTICE
+        =========================================== -->
+
+        <section class="sentence-section">
+
+            <h2>💬 Practice Sentences</h2>
+
+
+            <!-- SENTENCE 1 -->
+
+            <div class="sentence-card">
+
+                <p
+                    class="english-sentence"
+                    id="sentence1English">
+
+                    Hello, how are you?
+
+                </p>
+
+                <p
+                    class="kannada-sentence"
+                    id="sentence1Translation">
+
+                    ನಮಸ್ಕಾರ, ನೀವು ಹೇಗಿದ್ದೀರಿ?
+
+                </p>
+
+                <p
+                    class="pronunciation"
+                    id="sentence1Pronunciation">
+
+                    🔊 Namaskara, neevu hegiddiri?
+
+                </p>
+
+            </div>
+
+
+            <!-- SENTENCE 2 -->
+
+            <div class="sentence-card">
+
+                <p
+                    class="english-sentence"
+                    id="sentence2English">
+
+                    Thank you very much.
+
+                </p>
+
+                <p
+                    class="kannada-sentence"
+                    id="sentence2Translation">
+
+                    ತುಂಬಾ ಧನ್ಯವಾದಗಳು.
+
+                </p>
+
+                <p
+                    class="pronunciation"
+                    id="sentence2Pronunciation">
+
+                    🔊 Tumba dhanyavadagalu.
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <!-- ==========================================
+         LESSON JAVASCRIPT
+    =========================================== -->
+
+    <script>
+
+        // ==========================================
+        // LANGUAGE DATA
+        // ==========================================
+
+        const lessonData = {
+
+            kannada: {
+
+                name: "Kannada",
+
+                words: [
+
+                    {
+                        word: "Hello",
+                        translation: "ನಮಸ್ಕಾರ",
+                        pronunciation: "🔊 Namaskara"
+                    },
+
+                    {
+                        word: "Thank You",
+                        translation: "ಧನ್ಯವಾದ",
+                        pronunciation: "🔊 Dhanyavada"
+                    },
+
+                    {
+                        word: "Good Morning",
+                        translation: "ಶುಭೋದಯ",
+                        pronunciation: "🔊 Shubhodaya"
+                    },
+
+                    {
+                        word: "How are you?",
+                        translation: "ನೀವು ಹೇಗಿದ್ದೀರಿ?",
+                        pronunciation: "🔊 Neevu hegiddiri?"
+                    },
+
+                    {
+                        word: "Good Night",
+                        translation: "ಶುಭ ರಾತ್ರಿ",
+                        pronunciation: "🔊 Shubha ratri"
+                    },
+
+                    {
+                        word: "Welcome",
+                        translation: "ಸ್ವಾಗತ",
+                        pronunciation: "🔊 Swagatha"
+                    }
+
+                ],
+
+                sentences: [
+
+                    {
+                        english: "Hello, how are you?",
+                        translation: "ನಮಸ್ಕಾರ, ನೀವು ಹೇಗಿದ್ದೀರಿ?",
+                        pronunciation: "🔊 Namaskara, neevu hegiddiri?"
+                    },
+
+                    {
+                        english: "Thank you very much.",
+                        translation: "ತುಂಬಾ ಧನ್ಯವಾದಗಳು.",
+                        pronunciation: "🔊 Tumba dhanyavadagalu."
+                    }
+
+                ]
+
+            },
+
+
+            english: {
+
+                name: "English",
+
+                words: [
+
+                    {
+                        word: "Hello",
+                        translation: "Hello",
+                        pronunciation: "🔊 Hello"
+                    },
+
+                    {
+                        word: "Thank You",
+                        translation: "Thank You",
+                        pronunciation: "🔊 Thank You"
+                    },
+
+                    {
+                        word: "Good Morning",
+                        translation: "Good Morning",
+                        pronunciation: "🔊 Good Morning"
+                    },
+
+                    {
+                        word: "How are you?",
+                        translation: "How are you?",
+                        pronunciation: "🔊 How are you?"
+                    },
+
+                    {
+                        word: "Good Night",
+                        translation: "Good Night",
+                        pronunciation: "🔊 Good Night"
+                    },
+
+                    {
+                        word: "Welcome",
+                        translation: "Welcome",
+                        pronunciation: "🔊 Welcome"
+                    }
+
+                ],
+
+                sentences: [
+
+                    {
+                        english: "Hello, how are you?",
+                        translation: "Hello, how are you?",
+                        pronunciation: "🔊 Hello, how are you?"
+                    },
+
+                    {
+                        english: "Thank you very much.",
+                        translation: "Thank you very much.",
+                        pronunciation: "🔊 Thank you very much."
+                    }
+
+                ]
+
+            },
+
+
+            hindi: {
+
+                name: "Hindi",
+
+                words: [
+
+                    {
+                        word: "Hello",
+                        translation: "नमस्ते",
+                        pronunciation: "🔊 Namaste"
+                    },
+
+                    {
+                        word: "Thank You",
+                        translation: "धन्यवाद",
+                        pronunciation: "🔊 Dhanyavaad"
+                    },
+
+                    {
+                        word: "Good Morning",
+                        translation: "सुप्रभात",
+                        pronunciation: "🔊 Suprabhaat"
+                    },
+
+                    {
+                        word: "How are you?",
+                        translation: "आप कैसे हैं?",
+                        pronunciation: "🔊 Aap kaise hain?"
+                    },
+
+                    {
+                        word: "Good Night",
+                        translation: "शुभ रात्रि",
+                        pronunciation: "🔊 Shubh raatri"
+                    },
+
+                    {
+                        word: "Welcome",
+                        translation: "स्वागत है",
+                        pronunciation: "🔊 Swaagat hai"
+                    }
+
+                ],
+
+                sentences: [
+
+                    {
+                        english: "Hello, how are you?",
+                        translation: "नमस्ते, आप कैसे हैं?",
+                        pronunciation: "🔊 Namaste, aap kaise hain?"
+                    },
+
+                    {
+                        english: "Thank you very much.",
+                        translation: "बहुत धन्यवाद।",
+                        pronunciation: "🔊 Bahut dhanyavaad."
+                    }
+
+                ]
+
+            }
+
+        };
+
+
+        // ==========================================
+        // SELECTED LANGUAGE
+        // ==========================================
+
+        const selectedLanguage =
+            localStorage.getItem("selectedLanguage")
+            || "kannada";
+
+
+        // ==========================================
+        // LOAD SELECTED LANGUAGE
+        // ==========================================
+
+        function loadLessons() {
+
+            const data =
+                lessonData[selectedLanguage];
+
+
+            if (!data) {
+                return;
+            }
+
+
+            // ======================================
+            // SHOW LANGUAGE
+            // ======================================
+
+            document.getElementById(
+                "selectedLanguageDisplay"
+            ).innerText =
+                "🌐 Selected Language: " +
+                data.name;
+
+
+            // ======================================
+            // WORDS
+            // ======================================
+
+            for (
+                let i = 0;
+                i < data.words.length;
+                i++
+            ) {
+
+                const number = i + 1;
+
+
+                document.getElementById(
+                    "word" + number
+                ).innerText =
+                    data.words[i].word;
+
+
+                document.getElementById(
+                    "translation" + number
+                ).innerText =
+                    data.words[i].translation;
+
+
+                document.getElementById(
+                    "pronunciation" + number
+                ).innerText =
+                    data.words[i].pronunciation;
+
+            }
+
+
+            // ======================================
+            // SENTENCE 1
+            // ======================================
+
+            document.getElementById(
+                "sentence1English"
+            ).innerText =
+                data.sentences[0].english;
+
+
+            document.getElementById(
+                "sentence1Translation"
+            ).innerText =
+                data.sentences[0].translation;
+
+
+            document.getElementById(
+                "sentence1Pronunciation"
+            ).innerText =
+                data.sentences[0].pronunciation;
+
+
+            // ======================================
+            // SENTENCE 2
+            // ======================================
+
+            document.getElementById(
+                "sentence2English"
+            ).innerText =
+                data.sentences[1].english;
+
+
+            document.getElementById(
+                "sentence2Translation"
+            ).innerText =
+                data.sentences[1].translation;
+
+
+            document.getElementById(
+                "sentence2Pronunciation"
+            ).innerText =
+                data.sentences[1].pronunciation;
+
+        }
+
+
+        // ==========================================
+        // MARK WORD AS LEARNED
+        // ==========================================
+
+        function markLearned(button) {
+
+            button.innerText =
+                "✓ Learned";
+
+            button.classList.add(
+                "learned"
+            );
+
+            button.disabled = true;
+
+
+            // ======================================
+            // LANGUAGE-SPECIFIC WORD COUNT
+            // ======================================
+
+            let wordsLearned =
+                Number(
+                    localStorage.getItem(
+                        "wordsLearned_" +
+                        selectedLanguage
+                    ) || 0
+                );
+
+
+            wordsLearned++;
+
+
+            if (wordsLearned > 6) {
+
+                wordsLearned = 6;
+
+            }
+
+
+            localStorage.setItem(
+                "wordsLearned_" +
+                selectedLanguage,
+                wordsLearned
+            );
+
+
+            // ======================================
+            // SAVE TO FIREBASE
+            // ======================================
+
+            if (
+                window.saveLearningProgress
+            ) {
+
+                window.saveLearningProgress(
+                    wordsLearned,
+                    selectedLanguage
+                );
+
+            }
+
+
+            // ======================================
+            // UPDATE STREAK
+            // ======================================
+
+            updateStreak();
+
+        }
+
+
+        // ==========================================
+        // DAILY STREAK
+        // ==========================================
+
+        function updateStreak() {
+
+            const today =
+                new Date()
+                    .toISOString()
+                    .split("T")[0];
+
+
+            let lastLearningDate =
+                localStorage.getItem(
+                    "lastLearningDate"
+                );
+
+
+            let streak =
+                Number(
+                    localStorage.getItem(
+                        "streak"
+                    ) || 0
+                );
+
+
+            if (!lastLearningDate) {
+
+                streak = 1;
+
+            }
+
+            else if (
+                lastLearningDate === today
+            ) {
+
+                return;
+
+            }
+
+            else {
+
+                const lastDate =
+                    new Date(
+                        lastLearningDate
+                    );
+
+
+                const currentDate =
+                    new Date(today);
+
+
+                const difference =
+                    Math.floor(
+                        (
+                            currentDate -
+                            lastDate
+                        )
+                        /
+                        (
+                            1000 *
+                            60 *
+                            60 *
+                            24
+                        )
+                    );
+
+
+                if (difference === 1) {
+
+                    streak++;
+
+                }
+
+                else {
+
+                    streak = 1;
+
+                }
+
+            }
+
+
+            localStorage.setItem(
+                "streak",
+                streak
+            );
+
+
+            localStorage.setItem(
+                "lastLearningDate",
+                today
+            );
+
+        }
+
+
+        // ==========================================
+        // START
+        // ==========================================
+
+        loadLessons();
+
+    </script>
+
+
+    <!-- ==========================================
+         FIREBASE APP
+    =========================================== -->
+
+    <script
+        type="module"
+        src="js/app.js">
+    </script>
+
+
+    <!-- ==========================================
+         AUTHENTICATION CHECK
+    =========================================== -->
+
+    <script type="module">
+
+        import {
+            getAuth,
+            onAuthStateChanged
+        }
+        from "https://www.gstatic.com/firebasejs/12.0.0/firebase-auth.js";
+
+
+        import {
+            app
+        }
+        from "./js/app.js";
+
+
+        const auth =
+            getAuth(app);
+
+
+        onAuthStateChanged(
+            auth,
+            function(user) {
+
+                if (!user) {
+
+                    window.location.href =
+                        "login.html";
+
+                }
+
+                else {
+
+                    console.log(
+                        "Logged in as:",
+                        user.email
+                    );
+
+                }
+
+            }
+        );
+
+    </script>
+
+
+</body>
+
+</html>
